@@ -55,6 +55,10 @@
       window.webkit.messageHandlers.senderModel.postMessage({body: response});
       
     }
+    
+    function onCallJS(params) {
+        document.getElementById('jsParamFuncSpan').innerHTML = params;
+    }
       </script>
 </body>
 </html>

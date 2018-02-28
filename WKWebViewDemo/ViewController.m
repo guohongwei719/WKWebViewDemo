@@ -45,6 +45,13 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"后退" style:UIBarButtonItemStyleDone target:self action:@selector(goback)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"前进" style:UIBarButtonItemStyleDone target:self action:@selector(gofarward)];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, [UIScreen mainScreen].bounds.size.height - 60, 150, 40)];
+    [button setTitle:@"OC调JS测试" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setBackgroundColor:[UIColor lightGrayColor]];
+    [button addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
 }
 -(void)goback{
     if ([self.webView canGoBack]) {
@@ -56,6 +63,16 @@
     if ([self.webView canGoForward]) {
         [self.webView goForward];
     }
+}
+
+- (void)buttonTap
+{
+    NSString *str = @"OC 调用 JS";
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"onCallJS('%@')", str] completionHandler:^(id _Nullable data, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"错误：%@", error.localizedDescription);
+        }
+    }];
 }
 
 -(void)creatProgressView{
